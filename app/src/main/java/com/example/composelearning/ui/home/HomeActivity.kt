@@ -8,8 +8,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -25,6 +27,9 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,7 +39,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -51,7 +55,8 @@ class HomeActivity : ComponentActivity() {
             // SimpleUserCard() //2
             // UserCardWithCardView() //3
             //CardListUsingColum() //4
-            CardListLikeRecyclerView() //5
+            //CardListLikeRecyclerView() //5
+            StateRecyclerMainContent() //6
         }
     }
 
@@ -153,14 +158,43 @@ class HomeActivity : ComponentActivity() {
     }
 
     @Composable
-    fun CardListLikeRecyclerView() {
-        //Lazy column used as a recyclerview
+    fun CardListLikeRecyclerView(users: List<User>? = null) {
+        users?.let {
+            dummyList = it
+        }
+        //Lazy column used as a recyclerview, Fixed in size for now
         LazyColumn {
             items(dummyList) { user ->
                 UserCardWithCardView()
             }
         }
 
+    }
+
+    /** The above function is fixed. If the value is
+     * changed in the list nothing will happen... Lets fix it
+     * */
+    @Composable
+    fun StateRecyclerMainContent() {
+        val user = User(1)
+        val users = remember {
+            mutableStateListOf(user)
+        }
+        val context = LocalContext.current
+        Box(modifier = Modifier.fillMaxSize()) {
+            CardListLikeRecyclerView(users)
+            Button(
+                modifier = Modifier
+                    .padding(24.dp)
+                    .align(Alignment.BottomCenter),
+                onClick = {
+                    Toast.makeText(context, "Copied one row", Toast.LENGTH_SHORT).show()
+                    users.add(User(1))
+                }
+            ) {
+                Text(text = "Add more")
+            }
+        }
     }
 
     //Preview is only use for the UI preview.
@@ -181,9 +215,12 @@ class HomeActivity : ComponentActivity() {
 
         /** 5th component **/
         CardListLikeRecyclerView()
+
+        /** 6th component **/
+        StateRecyclerMainContent()
     }
 
-    private val dummyList = listOf(
+    private var dummyList = listOf(
         User(1),
         User(1),
         User(1),
