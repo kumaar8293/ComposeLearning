@@ -14,8 +14,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -45,7 +47,8 @@ class HomeActivity : ComponentActivity() {
         setContent {
             // GreetingMessage(msg = "Nishant Brokerr")   //1
             // SimpleUserCard() //2
-            UserCardWithCardView() //3
+           // UserCardWithCardView() //3
+            CardListUsingColum() //4
         }
     }
 
@@ -107,6 +110,7 @@ class HomeActivity : ComponentActivity() {
             }
         }
     }
+
     @Composable
     fun UserCardWithCardView() {
         Card(
@@ -117,14 +121,34 @@ class HomeActivity : ComponentActivity() {
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(8.dp)
-            ,
+                .padding(8.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White)
 
         ) {
             SimpleUserCard()
         }
     }
+
+    @Composable
+    fun CardListUsingColum() {
+        //It will create fix no of column
+        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+//        UserCardWithCardView()
+//        UserCardWithCardView()
+//        UserCardWithCardView()
+//        UserCardWithCardView()
+//        UserCardWithCardView()
+//        UserCardWithCardView()
+//        UserCardWithCardView()
+//        UserCardWithCardView()
+//        UserCardWithCardView()
+
+            for (i in 1..100) {
+                UserCardWithCardView()
+            }
+        }
+    }
+
 
     //Preview is only use for the UI preview.
     @Preview(showBackground = true)
@@ -136,8 +160,11 @@ class HomeActivity : ComponentActivity() {
         /** 2nd component **/
         // SimpleUserCard()
 
-        /** 2nd component **/
-        UserCardWithCardView()
+        /** 3nd component **/
+        // UserCardWithCardView()
+
+        /** 4th component **/
+        CardListUsingColum()
     }
 
 }
