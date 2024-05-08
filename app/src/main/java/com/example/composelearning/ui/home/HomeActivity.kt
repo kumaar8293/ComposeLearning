@@ -15,7 +15,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -40,8 +43,9 @@ class HomeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         // Roughly equivalent to calling ComponentActivity.setContentView() with a ComposeView i.e.:
         setContent {
-            // GreetingMessage(msg = "Nishant Brokerr")
-            SimpleUserCard()
+            // GreetingMessage(msg = "Nishant Brokerr")   //1
+            // SimpleUserCard() //2
+            UserCardWithCardView() //3
         }
     }
 
@@ -102,7 +106,24 @@ class HomeActivity : ComponentActivity() {
                 }
             }
         }
+    }
+    @Composable
+    fun UserCardWithCardView() {
+        Card(
+            shape = RoundedCornerShape(20.dp),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 10.dp
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(8.dp)
+            ,
+            colors = CardDefaults.cardColors(containerColor = Color.White)
 
+        ) {
+            SimpleUserCard()
+        }
     }
 
     //Preview is only use for the UI preview.
@@ -113,7 +134,10 @@ class HomeActivity : ComponentActivity() {
         //GreetingMessage(msg = "Sam Boxer")
 
         /** 2nd component **/
-        SimpleUserCard()
+        // SimpleUserCard()
+
+        /** 2nd component **/
+        UserCardWithCardView()
     }
 
 }
