@@ -14,6 +14,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -47,8 +49,9 @@ class HomeActivity : ComponentActivity() {
         setContent {
             // GreetingMessage(msg = "Nishant Brokerr")   //1
             // SimpleUserCard() //2
-           // UserCardWithCardView() //3
-            CardListUsingColum() //4
+            // UserCardWithCardView() //3
+            //CardListUsingColum() //4
+            CardListLikeRecyclerView() //5
         }
     }
 
@@ -78,7 +81,7 @@ class HomeActivity : ComponentActivity() {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
+                .wrapContentHeight() //By Default it takes wrapContentHeight, no need to add
                 .padding(12.dp)
                 .border(1.dp, Color.Gray)
                 .padding(12.dp)
@@ -149,6 +152,16 @@ class HomeActivity : ComponentActivity() {
         }
     }
 
+    @Composable
+    fun CardListLikeRecyclerView() {
+        //Lazy column used as a recyclerview
+        LazyColumn {
+            items(dummyList) { user ->
+                UserCardWithCardView()
+            }
+        }
+
+    }
 
     //Preview is only use for the UI preview.
     @Preview(showBackground = true)
@@ -164,7 +177,27 @@ class HomeActivity : ComponentActivity() {
         // UserCardWithCardView()
 
         /** 4th component **/
-        CardListUsingColum()
+        // CardListUsingColum()
+
+        /** 5th component **/
+        CardListLikeRecyclerView()
     }
 
+    private val dummyList = listOf(
+        User(1),
+        User(1),
+        User(1),
+        User(1),
+        User(1),
+        User(1),
+        User(1),
+        User(1),
+        User(1),
+        User(1),
+        User(1),
+        User(1),
+        User(1)
+    )
+
+    data class User(val id: Int)
 }
