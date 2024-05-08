@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ComposeLearning</string>
+    <string name="sample_string">It sounds wonderful! What makes it lovely for you?</string>
 </resources>
